@@ -83,6 +83,5 @@ class TrainerRepositoryTest {
     public void saveTrainer_invalidId_test(){
         Optional<Trainer> trainerOptional = trainerRepository.findById(999);
         assertTrue(trainerOptional.isEmpty());
-
     }
 }

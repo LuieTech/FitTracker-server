@@ -1,4 +1,8 @@
 package luitech.java.trainerTracker_server.service.impl;
 
-public class ClientService {
+import luitech.java.trainerTracker_server.service.interfaces.IClientService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ClientService implements IClientService {
 }
