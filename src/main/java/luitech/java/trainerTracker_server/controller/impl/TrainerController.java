@@ -30,5 +30,11 @@ public class TrainerController {
         trainerService.saveTrainer(trainerBody);
     }
 
+    @PutMapping("/trainers/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateTrainer(@RequestBody Trainer trainerInfo, @PathVariable Integer id){
+        trainerService.updateTrainer(trainerInfo, id);
+    }
+
 
 }

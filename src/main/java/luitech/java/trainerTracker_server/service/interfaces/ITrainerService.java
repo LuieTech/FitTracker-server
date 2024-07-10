@@ -10,4 +10,6 @@ public interface ITrainerService {
     Trainer getTrainerById(Integer id);
 
     void saveTrainer(Trainer trainerBody);
+
+    void updateTrainer(Trainer trainerInfo, Integer id);
 }

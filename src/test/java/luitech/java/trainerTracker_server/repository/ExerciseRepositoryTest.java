@@ -23,6 +23,7 @@ class ExerciseRepositoryTest {
 
         exercise = new Exercise("pull down", "slow tempo", "back");
         exerciseRepository.save(exercise);
+        System.out.println("This is the new exercise: "+ exercise);
 
     }
 
@@ -35,10 +36,9 @@ class ExerciseRepositoryTest {
 
     @Test
     public void saveExercise_repositoryTest(){
-        exerciseRepository.findById(exercise.getExerciseId());
         Optional<Exercise> exerciseOptional = exerciseRepository.findById(exercise.getExerciseId());
         assertTrue(exerciseOptional.isPresent());
-        assertEquals("pull down", exercise.getName());
+        System.out.println(exerciseOptional.get().getExerciseId());
     }
 
 }

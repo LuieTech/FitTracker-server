@@ -16,6 +16,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer clientId;
+    private String name;
     private String username;
     private String password;
     private String email;
@@ -24,12 +25,15 @@ public class Client {
     private List<Exercise> exerciseList = new ArrayList<>();
     private Integer trainerId;
 
-    public Client(String username, String password, String email, String comment, List<Exercise> exerciseList, Integer trainerId) {
+    public Client(String name, String username, String password, String email, String comment) {
+        this.name = name;
         this.username = username;
         this.password = password;
         this.email = email;
         this.comment = comment;
-        this.exerciseList = exerciseList;
-        this.trainerId = trainerId;
+    }
+
+    public void addExercise(Exercise exercise){
+        exerciseList.add(exercise);
     }
 }

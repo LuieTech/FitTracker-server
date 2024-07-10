@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,15 +24,16 @@ class ClientRepositoryTest {
 
     Client client;
     Exercise exercise;
-    List<Exercise> exerciseList = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
         exercise = new Exercise("pull down", "slow tempo", "back");
         exerciseRepository.save(exercise);
-        exerciseList.add(exercise);
+//        exerciseList.add(exercise);
 
-        client = new Client("alex", "1234", "alex@example.com", "Cardio 3x weekly", exerciseList, 123);
+        client = new Client("alexander rubio","alex", "1234", "alex@example.com", "Cardio 3x weekly");
+        client.setTrainerId(333);
+        client.addExercise(exercise);
         clientRepository.save(client);
 
     }

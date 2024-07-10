@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class Trainer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer trainerId;
     private String name;
+    @Getter
+    private String username;
     private String email;
     private Integer phoneNumber;
 
@@ -27,11 +30,20 @@ public class Trainer {
     @OneToMany
     private List<Exercise> exerciseList = new ArrayList<>();
 
-    public Trainer(String name, String email, Integer phoneNumber, List<Client> clientList, List<Exercise> exerciseList) {
+    public Trainer(String name, String username, String email, Integer phoneNumber) {
         this.name = name;
+        this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.clientList = clientList;
-        this.exerciseList = exerciseList;
     }
+
+    public void addClient(Client client){
+        clientList.add(client);
+    }
+    public void addExercise(Exercise exercise){
+        exerciseList.add(exercise);
+    }
+
+
+
 }

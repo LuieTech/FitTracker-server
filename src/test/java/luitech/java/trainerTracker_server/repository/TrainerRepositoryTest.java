@@ -29,10 +29,7 @@ class TrainerRepositoryTest {
 
     Trainer trainer;
     Client client;
-    List<Client> clientList = new ArrayList<>();
-
     Exercise exercise;
-    List<Exercise> exerciseList = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -47,20 +44,18 @@ class TrainerRepositoryTest {
         exercise.setDescription("slow tempo");
         exercise.setBodyPart("back");
         exerciseRepository.save(exercise);
-        exerciseList.add(exercise);
 
         client = new Client();
+        client.setName("alexander rubio");
         client.setEmail("alex@example.com");
         client.setPassword("1234");
         client.setUsername("alex");
         client.setComment("Cardio 3x weekly");
         client.setTrainerId(trainer.getTrainerId());
-        client.setExerciseList(exerciseList);
         clientRepository.save(client);
-        clientList.add(client);
 
-        trainer.setClientList(clientList);
-        trainer.setExerciseList(exerciseList);
+        trainer.addClient(client);
+        trainer.addExercise(exercise);
         trainerRepository.save(trainer);
     }
 
