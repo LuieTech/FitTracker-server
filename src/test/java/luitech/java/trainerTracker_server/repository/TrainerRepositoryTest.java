@@ -55,12 +55,12 @@ class TrainerRepositoryTest {
         client.setUsername("alex");
         client.setComment("Cardio 3x weekly");
         client.setTrainerId(trainer.getTrainerId());
-        client.setExercises(exerciseList);
+        client.setExerciseList(exerciseList);
         clientRepository.save(client);
         clientList.add(client);
 
-        trainer.setClients(clientList);
-        trainer.setExercises(exerciseList);
+        trainer.setClientList(clientList);
+        trainer.setExerciseList(exerciseList);
         trainerRepository.save(trainer);
     }
 

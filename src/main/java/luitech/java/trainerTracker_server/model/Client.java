@@ -21,15 +21,15 @@ public class Client {
     private String email;
     private String comment;
     @OneToMany
-    private List<Exercise> exercises = new ArrayList<>();
+    private List<Exercise> exerciseList = new ArrayList<>();
     private Integer trainerId;
 
-    public Client(String username, String password, String email, String comment, List<Exercise> exercises, Integer trainerId) {
+    public Client(String username, String password, String email, String comment, List<Exercise> exerciseList, Integer trainerId) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.comment = comment;
-        this.exercises = exercises;
+        this.exerciseList = exerciseList;
         this.trainerId = trainerId;
     }
 }

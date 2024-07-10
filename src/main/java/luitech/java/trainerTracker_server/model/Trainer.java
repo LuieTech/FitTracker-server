@@ -22,16 +22,16 @@ public class Trainer {
     private Integer phoneNumber;
 
     @OneToMany(mappedBy = "trainerId")
-    private List<Client> clients = new ArrayList<>();
+    private List<Client> clientList = new ArrayList<>();
 
     @OneToMany
-    private List<Exercise> exercises = new ArrayList<>();
+    private List<Exercise> exerciseList = new ArrayList<>();
 
-    public Trainer(String name, String email, Integer phoneNumber, List<Client> clients, List<Exercise> exercises) {
+    public Trainer(String name, String email, Integer phoneNumber, List<Client> clientList, List<Exercise> exerciseList) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.clients = clients;
-        this.exercises = exercises;
+        this.clientList = clientList;
+        this.exerciseList = exerciseList;
     }
 }

@@ -28,14 +28,6 @@ class ClientRepositoryTest {
     Exercise exercise;
     List<Exercise> exerciseList = new ArrayList<>();
 
-//    private String username;
-//    private String password;
-//    private String email;
-//    private String comment;
-//    @OneToMany
-//    private List<Exercise> exercises = new ArrayList<>();
-//    private Integer trainerId;
-
     @BeforeEach
     void setUp() {
         exercise = new Exercise("pull down", "slow tempo", "back");
