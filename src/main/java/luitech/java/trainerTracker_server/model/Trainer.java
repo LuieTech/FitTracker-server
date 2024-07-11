@@ -19,9 +19,6 @@ public class Trainer {
     private String email;
     private Integer phoneNumber;
 
-    @OneToMany
-    private List<Exercise> exerciseList = new ArrayList<>();
-
     public Trainer(String name, String username, String email, Integer phoneNumber) {
         this.name = name;
         this.username = username;

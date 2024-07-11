@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientPasswordDTO;
 import luitech.java.trainerTracker_server.model.Client;
+import luitech.java.trainerTracker_server.model.ClientInfo;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
@@ -27,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 class ClientControllerTest {
-
     @Autowired
     ClientRepository clientRepository;
     @Autowired
@@ -40,24 +40,40 @@ class ClientControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     Client client1;
+    ClientInfo clientInfo;
     Trainer trainer1;
     Exercise exercise1;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        client1 = new Client("brian adams", "brian", "12345", "brian@example.com", "hypertrophy phase");
+
+        clientInfo = new ClientInfo("michael edwards", "empty st.", 1234567, "me@example.com");
+        client1 = new Client();
+        client1.setUsername("henryTech");
+        client1.setPassword("12345");
+        client1.setComment("full body 3x per week");
+        client1.setClientInfo(clientInfo);
+        clientRepository.save(client1);
+
+        trainer1 = new Trainer("Jacob Williams", "jacob", "jw@example.com", 12345);
+        trainerRepository.save(trainer1);
+
+        exercise1 = new Exercise();
+        exercise1.setName("lunges");
+        exercise1.setDescription("medium tempo");
+        exercise1.setBodyPart("legs");
+        exerciseRepository.save(exercise1);
+
+        client1.setTrainer(trainer1);
+        client1.getExerciseList().add(exercise1);
         clientRepository.save(client1);
 
     }
 
     @AfterEach
     void tearDown() {
-
         clientRepository.deleteById(client1.getId());
-//        trainerRepository.deleteById(trainer1.getTrainerId());
-//        exerciseRepository.deleteById(exercise1.getExerciseId());
-
     }
     @Test
     void getAllClients_Test() throws Exception {
@@ -66,6 +82,7 @@ class ClientControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
     }
+
     @Test
     void getClientById_invalidId() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/api/clients/34567").contentType(MediaType.APPLICATION_JSON))
@@ -74,12 +91,12 @@ class ClientControllerTest {
     }
 
     @Test
-    void saveTrainer() throws Exception {
+    void saveClient_test() throws Exception {
         String body = objectMapper.writeValueAsString(client1);
         MvcResult mvcResult = mockMvc.perform(post("/api/clients").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
-        assertTrue(clientRepository.findAll().toString().contains("brian adams"));
+        assertTrue(clientRepository.findAll().toString().contains("henryTech"));
     }
 
     @Test
@@ -92,7 +109,7 @@ class ClientControllerTest {
         assertTrue(clientRepository.findById(client1.getId()).toString().contains("567890"));
     }
     @Test
-    void updateClientEmail() throws Exception {
+    void updateClientEmail_test() throws Exception {
         ClientEmailDTO clientEmailDTO = new ClientEmailDTO("kevin@example.com");
         String body = objectMapper.writeValueAsString(clientEmailDTO);
         mockMvc.perform(patch("/api/clients/email/"+client1.getId()).content(body).contentType(MediaType.APPLICATION_JSON))

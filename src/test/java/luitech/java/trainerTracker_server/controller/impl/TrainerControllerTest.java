@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,8 +40,6 @@ class TrainerControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     Trainer trainer1;
-    Trainer trainer2;
-
     Client client1;
     Exercise exercise1;
 
@@ -49,10 +49,31 @@ class TrainerControllerTest {
         trainer1 = new Trainer("Jacob Williams", "jacob", "jw@example.com", 12345);
         trainerRepository.save(trainer1);
 
+        client1 = new Client();
+        client1.setUsername("juan");
+        client1.setPassword("1234");
+        client1.setComment("Testing Trainer Controllers");
+        clientRepository.save(client1);
+
+        exercise1 = new Exercise();
+        exercise1.setName("lunges");
+        exercise1.setDescription("medium tempo");
+        exercise1.setBodyPart("legs");
+        exerciseRepository.save(exercise1);
+
+        Optional<Trainer> trainerOptional = trainerRepository.findById(trainer1.getId());
+        if(trainerOptional.isPresent()){
+            exercise1.setTrainer(trainer1);
+            exerciseRepository.save(exercise1);
+            client1.setTrainer(trainer1);
+            clientRepository.save(client1);
+        }
     }
 
     @AfterEach
     void tearDown() {
+        clientRepository.deleteById(client1.getId());
+        exerciseRepository.deleteById(exercise1.getId());
         trainerRepository.deleteById(trainer1.getId());
     }
 
@@ -63,6 +84,7 @@ class TrainerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Jacob Williams"));
+        System.out.println(trainer1);
 
     }
 
@@ -80,15 +102,13 @@ class TrainerControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/api/trainers").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
-
-//        assertTrue(trainerRepository.findAll().toString().contains("Jacob Williams"));
     }
 
     @Test
     void updateTrainer_test() throws Exception{
-        Trainer updatedInfo = new Trainer("Marco Ruiz", "Marco", "marco@example.com", 12345678);
-        updatedInfo.setId(trainer1.getId());
-        String body = objectMapper.writeValueAsString(updatedInfo);
+        Trainer newInfo = new Trainer("Marco Ruiz", "Marco", "marco@example.com", 12345678);
+        newInfo.setId(trainer1.getId());
+        String body = objectMapper.writeValueAsString(newInfo);
         MvcResult mvcResult = mockMvc.perform(put("/api/trainers/"+trainer1.getId())
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON))

@@ -1,6 +1,7 @@
 package luitech.java.trainerTracker_server.repository;
 
 import luitech.java.trainerTracker_server.model.Client;
+import luitech.java.trainerTracker_server.model.ClientInfo;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import org.junit.jupiter.api.AfterEach;
@@ -24,6 +25,7 @@ class ClientRepositoryTest {
             TrainerRepository trainerRepository;
 
     Client client;
+    ClientInfo clientInfo;
     Exercise exercise;
     Trainer trainer;
 
@@ -31,13 +33,14 @@ class ClientRepositoryTest {
     void setUp() {
 
         trainer = new Trainer();
-        trainer.setName("michael");
+        trainer.setName("jorge");
         trainerRepository.save(trainer);
 
-        exercise = new Exercise("pull down", "slow tempo", "back");
+        exercise = new Exercise("roll back", "slow tempo", "back");
         exerciseRepository.save(exercise);
 
-        client = new Client("alexander rubio","alex", "1234", "alex@example.com", "Cardio 3x weekly");
+        clientInfo = new ClientInfo("michael edwards", "empty st.", 1234567, "me@example.com");
+        client = new Client("michael1", "1234", "mon, wed, fri", clientInfo);
         client.setTrainer(trainer);
         client.getExerciseList().add(exercise);
         clientRepository.save(client);
@@ -50,15 +53,14 @@ class ClientRepositoryTest {
         clientRepository.deleteById(client.getId());
         trainerRepository.deleteById(trainer.getId());
         exerciseRepository.deleteById(exercise.getId());
-
     }
 
     @Test
-    public void saveClient_Test(){
+    public void saveClient_Test() {
         Optional<Client> clientOptional = clientRepository.findById(client.getId());
         assertTrue(clientOptional.isPresent());
-        assertEquals("alexander rubio", clientOptional.get().getName());
-
+        assertEquals("michael edwards", clientOptional.get().getClientInfo().getName());
     }
+
 
 }

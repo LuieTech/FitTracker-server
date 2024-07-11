@@ -24,8 +24,6 @@ class TrainerRepositoryTest {
             ClientRepository clientRepository;
 
     Trainer trainer;
-    Client client;
-    Exercise exercise;
 
     @BeforeEach
     void setUp() {
@@ -34,32 +32,11 @@ class TrainerRepositoryTest {
         trainer.setEmail("luie@example.com");
         trainer.setPhoneNumber(456789);
         trainerRepository.save(trainer);
-
-        exercise = new Exercise();
-        exercise.setName("pull down");
-        exercise.setDescription("slow tempo");
-        exercise.setBodyPart("back");
-        exerciseRepository.save(exercise);
-//
-//        client = new Client();
-//        client.setName("alexander rubio");
-//        client.setEmail("alex@example.com");
-//        client.setPassword("1234");
-//        client.setUsername("alex");
-//        client.setComment("Cardio 3x weekly");
-//        client.setTrainer(trainer);
-//        clientRepository.save(client);
-
-        trainer.getExerciseList().add(exercise);
-        trainerRepository.save(trainer);
-
     }
 
     @AfterEach
     void tearDown() {
         trainerRepository.deleteById(trainer.getId());
-//        clientRepository.deleteById(client.getClientId());
-        exerciseRepository.deleteById(exercise.getId());
     }
 
     @Test

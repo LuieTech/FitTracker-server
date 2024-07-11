@@ -4,6 +4,7 @@ import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientPasswordDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientUsernameDTO;
 import luitech.java.trainerTracker_server.model.Client;
+import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.service.interfaces.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,5 +49,6 @@ public class ClientController {
     public void updateClientPassword(@RequestBody ClientPasswordDTO clientPasswordDTO, @PathVariable Integer id){
         clientService.updateClientPassword(clientPasswordDTO.getPassword(), id);
     }
+
 
 }

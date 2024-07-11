@@ -15,23 +15,21 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
-    private String name;
     private String username;
     private String password;
-    private String email;
     private String comment;
+    @Embedded
+    private ClientInfo clientInfo;
     @ManyToOne
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
-
     @OneToMany
     private List<Exercise> exerciseList = new ArrayList<>();
 
-    public Client(String name, String username, String password, String email, String comment) {
-        this.name = name;
+    public Client(String username, String password, String comment, ClientInfo clientInfo) {
         this.username = username;
         this.password = password;
-        this.email = email;
         this.comment = comment;
+        this.clientInfo = clientInfo;
     }
 }

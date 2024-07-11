@@ -14,9 +14,9 @@ public class Exercise {
     private String name;
     private String description;
     private String bodyPart;
-//    @ManyToOne
-//    @JoinColumn(name = "client_id")
-//    private Client client;
+    @ManyToOne
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
 
     public Exercise(String name, String description, String bodyPart) {
         this.name = name;

@@ -40,7 +40,7 @@ public class ClientService implements IClientService {
         Optional<Client> clientOptional = clientRepository.findById(id);
         if(clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client "+id+" not found");
         Client client = clientOptional.get();
-        client.setEmail(email);
+        client.getClientInfo().setEmail(email);
         clientRepository.save(client);
     }
 
