@@ -54,7 +54,7 @@ class ClientControllerTest {
     @AfterEach
     void tearDown() {
 
-        clientRepository.deleteById(client1.getClientId());
+        clientRepository.deleteById(client1.getId());
 //        trainerRepository.deleteById(trainer1.getTrainerId());
 //        exerciseRepository.deleteById(exercise1.getExerciseId());
 
@@ -86,19 +86,19 @@ class ClientControllerTest {
     void updateClientPassword_test() throws Exception {
         ClientPasswordDTO clientPasswordDTO = new ClientPasswordDTO("567890");
         String body = objectMapper.writeValueAsString(clientPasswordDTO);
-        mockMvc.perform(patch("/api/clients/password/"+client1.getClientId()).content(body).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(patch("/api/clients/password/"+client1.getId()).content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andReturn();
-        assertTrue(clientRepository.findById(client1.getClientId()).toString().contains("567890"));
+        assertTrue(clientRepository.findById(client1.getId()).toString().contains("567890"));
     }
     @Test
     void updateClientEmail() throws Exception {
         ClientEmailDTO clientEmailDTO = new ClientEmailDTO("kevin@example.com");
         String body = objectMapper.writeValueAsString(clientEmailDTO);
-        mockMvc.perform(patch("/api/clients/email/"+client1.getClientId()).content(body).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(patch("/api/clients/email/"+client1.getId()).content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andReturn();
-        assertTrue(clientRepository.findById(client1.getClientId()).toString().contains("kevin@example.com"));
+        assertTrue(clientRepository.findById(client1.getId()).toString().contains("kevin@example.com"));
     }
 
 }

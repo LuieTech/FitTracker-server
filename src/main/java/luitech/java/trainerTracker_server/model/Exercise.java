@@ -2,20 +2,21 @@ package luitech.java.trainerTracker_server.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
 public class Exercise {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer exerciseId;
+    private Integer Id;
     private String name;
     private String description;
     private String bodyPart;
+//    @ManyToOne
+//    @JoinColumn(name = "client_id")
+//    private Client client;
 
     public Exercise(String name, String description, String bodyPart) {
         this.name = name;

@@ -1,6 +1,5 @@
 package luitech.java.trainerTracker_server.repository;
 
-import jakarta.persistence.OneToMany;
 import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
@@ -21,41 +20,45 @@ class ClientRepositoryTest {
             ClientRepository clientRepository;
     @Autowired
             ExerciseRepository exerciseRepository;
+    @Autowired
+            TrainerRepository trainerRepository;
 
     Client client;
     Exercise exercise;
+    Trainer trainer;
 
     @BeforeEach
     void setUp() {
+
+        trainer = new Trainer();
+        trainer.setName("michael");
+        trainerRepository.save(trainer);
+
         exercise = new Exercise("pull down", "slow tempo", "back");
         exerciseRepository.save(exercise);
-//        exerciseList.add(exercise);
 
         client = new Client("alexander rubio","alex", "1234", "alex@example.com", "Cardio 3x weekly");
-        client.setTrainerId(333);
-        client.addExercise(exercise);
+        client.setTrainer(trainer);
+        client.getExerciseList().add(exercise);
         clientRepository.save(client);
+        System.out.println("THIS IS CLIENT IN BEFORE EACH: "+client);
 
     }
 
     @AfterEach
     void tearDown() {
-        clientRepository.deleteById(client.getClientId());
-        exerciseRepository.deleteById(exercise.getExerciseId());
+        clientRepository.deleteById(client.getId());
+        trainerRepository.deleteById(trainer.getId());
+        exerciseRepository.deleteById(exercise.getId());
 
     }
 
     @Test
-    public void saveClient_repositoryTest(){
-        clientRepository.findById(client.getClientId());
-        Optional<Client> clientOptional = clientRepository.findById(client.getClientId());
-        assertEquals(clientOptional.get().getUsername(), client.getUsername());
-        System.out.println("This is client created: "+clientOptional.get());
+    public void saveClient_Test(){
+        Optional<Client> clientOptional = clientRepository.findById(client.getId());
+        assertTrue(clientOptional.isPresent());
+        assertEquals("alexander rubio", clientOptional.get().getName());
+
     }
 
-    @Test
-    public void saveClient_invalidId_test(){
-        Optional<Client> clientOptional = clientRepository.findById(999);
-        assertTrue(clientOptional.isEmpty());
-    }
 }

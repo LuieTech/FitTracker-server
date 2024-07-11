@@ -1,6 +1,9 @@
 package luitech.java.trainerTracker_server.controller.impl;
 
+import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Trainer;
+import luitech.java.trainerTracker_server.repository.ClientRepository;
+import luitech.java.trainerTracker_server.service.interfaces.IClientService;
 import luitech.java.trainerTracker_server.service.interfaces.ITrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +16,8 @@ import java.util.List;
 public class TrainerController {
     @Autowired
     ITrainerService trainerService;
+    @Autowired
+    ClientRepository clientRepository;
 
     @GetMapping("/trainers")
     public List<Trainer> getAllTrainers(){
@@ -36,5 +41,10 @@ public class TrainerController {
         trainerService.updateTrainer(trainerInfo, id);
     }
 
+
+    @GetMapping("/trainers/clients/{trainerId}")
+    public List<Client> getAllClientsByTrainerId(@PathVariable Integer trainerId){
+        return trainerService.getAllClientsByTrainerId(trainerId);
+    }
 
 }

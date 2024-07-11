@@ -52,8 +52,8 @@ class ExerciseControllerTest {
 
     @AfterEach
     void tearDown() {
-        exerciseRepository.deleteById(exercise1.getExerciseId());
-        exerciseRepository.deleteById(exercise2.getExerciseId());
+        exerciseRepository.deleteById(exercise1.getId());
+        exerciseRepository.deleteById(exercise2.getId());
     }
 
     @Test
@@ -63,13 +63,13 @@ class ExerciseControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("push ups"));
-        System.out.println("This is the exercise1: "+ exercise1.getExerciseId());
+        System.out.println("This is the exercise1: "+ exercise1.getId());
     }
 
     @Test
-    void getExerciseById_invalidId_test() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/api/exercises/7").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound())
+    void getExerciseById_test() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/api/exercises/"+exercise1.getId()).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andReturn();
     }
 

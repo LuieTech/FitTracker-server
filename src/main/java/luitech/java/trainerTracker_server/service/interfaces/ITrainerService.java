@@ -1,5 +1,6 @@
 package luitech.java.trainerTracker_server.service.interfaces;
 
+import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Trainer;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface ITrainerService {
     void saveTrainer(Trainer trainerBody);
 
     void updateTrainer(Trainer trainerInfo, Integer id);
+
+
+    List<Client> getAllClientsByTrainerId(Integer trainerId);
 }

@@ -1,6 +1,8 @@
 package luitech.java.trainerTracker_server.service.impl;
 
+import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Trainer;
+import luitech.java.trainerTracker_server.repository.ClientRepository;
 import luitech.java.trainerTracker_server.repository.TrainerRepository;
 import luitech.java.trainerTracker_server.service.interfaces.ITrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class TrainerService implements ITrainerService {
 
     @Autowired
     TrainerRepository trainerRepository;
+    @Autowired
+    ClientRepository clientRepository;
 
     @Override
     public List<Trainer> getAllTrainers() {
@@ -40,4 +44,11 @@ public class TrainerService implements ITrainerService {
         if(trainerOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer "+id+" not found");
         trainerRepository.save(trainerInfo);
     }
+
+    @Override
+    public List<Client> getAllClientsByTrainerId(Integer trainerId) {
+        return clientRepository.findAllByTrainerId(trainerId);
+    }
+
+
 }

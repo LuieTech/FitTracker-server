@@ -1,6 +1,5 @@
 package luitech.java.trainerTracker_server.repository;
 
-import jakarta.persistence.OneToMany;
 import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
@@ -10,9 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,31 +40,31 @@ class TrainerRepositoryTest {
         exercise.setDescription("slow tempo");
         exercise.setBodyPart("back");
         exerciseRepository.save(exercise);
+//
+//        client = new Client();
+//        client.setName("alexander rubio");
+//        client.setEmail("alex@example.com");
+//        client.setPassword("1234");
+//        client.setUsername("alex");
+//        client.setComment("Cardio 3x weekly");
+//        client.setTrainer(trainer);
+//        clientRepository.save(client);
 
-        client = new Client();
-        client.setName("alexander rubio");
-        client.setEmail("alex@example.com");
-        client.setPassword("1234");
-        client.setUsername("alex");
-        client.setComment("Cardio 3x weekly");
-        client.setTrainerId(trainer.getTrainerId());
-        clientRepository.save(client);
-
-        trainer.addClient(client);
-        trainer.addExercise(exercise);
+        trainer.getExerciseList().add(exercise);
         trainerRepository.save(trainer);
+
     }
 
     @AfterEach
     void tearDown() {
-        trainerRepository.deleteById(trainer.getTrainerId());
-        clientRepository.deleteById(client.getClientId());
-        exerciseRepository.deleteById(exercise.getExerciseId());
+        trainerRepository.deleteById(trainer.getId());
+//        clientRepository.deleteById(client.getClientId());
+        exerciseRepository.deleteById(exercise.getId());
     }
 
     @Test
     public void saveTrainer_repositoryTest(){
-        Optional<Trainer> trainerOptional = trainerRepository.findById(trainer.getTrainerId());
+        Optional<Trainer> trainerOptional = trainerRepository.findById(trainer.getId());
         assertTrue(trainerOptional.isPresent());
         assertEquals("luie", trainerOptional.get().getName());
         System.out.println("This is the created trainer: "+ trainerOptional.get());

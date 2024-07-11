@@ -30,15 +30,15 @@ class ExerciseRepositoryTest {
     @AfterEach
     void tearDown() {
 
-        exerciseRepository.deleteById(exercise.getExerciseId());
+        exerciseRepository.deleteById(exercise.getId());
 
     }
 
     @Test
     public void saveExercise_repositoryTest(){
-        Optional<Exercise> exerciseOptional = exerciseRepository.findById(exercise.getExerciseId());
+        Optional<Exercise> exerciseOptional = exerciseRepository.findById(exercise.getId());
         assertTrue(exerciseOptional.isPresent());
-        System.out.println(exerciseOptional.get().getExerciseId());
+        System.out.println(exerciseOptional.get().getId());
     }
 
 }

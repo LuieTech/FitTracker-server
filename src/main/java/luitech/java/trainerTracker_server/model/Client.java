@@ -1,7 +1,6 @@
 package luitech.java.trainerTracker_server.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,15 +14,18 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer clientId;
+    private Integer Id;
     private String name;
     private String username;
     private String password;
     private String email;
     private String comment;
+    @ManyToOne
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
+
     @OneToMany
     private List<Exercise> exerciseList = new ArrayList<>();
-    private Integer trainerId;
 
     public Client(String name, String username, String password, String email, String comment) {
         this.name = name;
@@ -31,9 +33,5 @@ public class Client {
         this.password = password;
         this.email = email;
         this.comment = comment;
-    }
-
-    public void addExercise(Exercise exercise){
-        exerciseList.add(exercise);
     }
 }

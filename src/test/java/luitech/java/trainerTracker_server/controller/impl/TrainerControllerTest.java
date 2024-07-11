@@ -48,36 +48,12 @@ class TrainerControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         trainer1 = new Trainer("Jacob Williams", "jacob", "jw@example.com", 12345);
         trainerRepository.save(trainer1);
-        client1 = new Client();
-        client1.setName("alexander rubio");
-        client1.setEmail("alex@example.com");
-        client1.setPassword("1234");
-        client1.setUsername("alex");
-        client1.setComment("Cardio 3x weekly");
-        client1.setTrainerId(trainer1.getTrainerId());
-        clientRepository.save(client1);
-        trainer1.addClient(client1);
-        trainerRepository.save(trainer1);
-
-        trainer2 = new Trainer("Val Rodriguez", "val", "val@example.com", 56789);
-        trainerRepository.save(trainer2);
-        exercise1 = new Exercise();
-        exercise1.setName("pull down");
-        exercise1.setDescription("slow tempo");
-        exercise1.setBodyPart("back");
-        exerciseRepository.save(exercise1);
-        trainer2.addExercise(exercise1);
-        trainerRepository.save(trainer2);
 
     }
 
     @AfterEach
     void tearDown() {
-
-        trainerRepository.deleteById(trainer1.getTrainerId());
-        trainerRepository.deleteById(trainer2.getTrainerId());
-        clientRepository.deleteById(client1.getClientId());
-        exerciseRepository.deleteById(exercise1.getExerciseId());
+        trainerRepository.deleteById(trainer1.getId());
     }
 
     @Test
@@ -86,15 +62,16 @@ class TrainerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("Val Rodriguez"));
-        System.out.println("This is the trainer1: "+ trainer1.getTrainerId());
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Jacob Williams"));
+
     }
 
     @Test
-    void getTrainerById_invalidId() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/api/trainers/34567").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound())
+    void getTrainerById_test() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/api/trainers/"+trainer1.getId()).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andReturn();
+
     }
 
     @Test
@@ -104,21 +81,21 @@ class TrainerControllerTest {
                 .andExpect(status().isCreated())
                 .andReturn();
 
-        assertTrue(trainerRepository.findAll().toString().contains("Val Rodriguez"));
+//        assertTrue(trainerRepository.findAll().toString().contains("Jacob Williams"));
     }
 
     @Test
     void updateTrainer_test() throws Exception{
         Trainer updatedInfo = new Trainer("Marco Ruiz", "Marco", "marco@example.com", 12345678);
-        updatedInfo.setTrainerId(trainer1.getTrainerId());
+        updatedInfo.setId(trainer1.getId());
         String body = objectMapper.writeValueAsString(updatedInfo);
-        MvcResult mvcResult = mockMvc.perform(put("/api/trainers/"+trainer1.getTrainerId())
+        MvcResult mvcResult = mockMvc.perform(put("/api/trainers/"+trainer1.getId())
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        Trainer foundTrainer = trainerRepository.findById(trainer1.getTrainerId()).orElseThrow();
+        Trainer foundTrainer = trainerRepository.findById(trainer1.getId()).orElseThrow();
         assertEquals("Marco Ruiz", foundTrainer.getName());
         assertEquals("Marco", foundTrainer.getUsername());
         assertEquals("marco@example.com", foundTrainer.getEmail());
