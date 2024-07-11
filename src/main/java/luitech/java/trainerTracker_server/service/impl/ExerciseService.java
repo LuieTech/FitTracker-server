@@ -19,8 +19,6 @@ public class ExerciseService implements IExerciseService {
 
     @Autowired
     ExerciseRepository exerciseRepository;
-
-
     @Override
     public List<Exercise> getAllExercises() {
         return exerciseRepository.findAll();
