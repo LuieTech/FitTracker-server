@@ -1,4 +1,3 @@
-Trainer Tracker Backend
 Trainer Tracker Backend is a Spring Boot application designed to manage trainers, 
 clients, and exercises. The application allows trainers to add and manage their clients and exercises. 
 This backend provides RESTful APIs for CRUD operations on these entities.
