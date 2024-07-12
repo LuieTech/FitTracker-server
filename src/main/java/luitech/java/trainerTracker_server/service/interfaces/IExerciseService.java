@@ -12,4 +12,5 @@ public interface IExerciseService {
 
     void saveExercise(Exercise exerciseBody);
 
+    void deleteExercise(Integer id);
 }

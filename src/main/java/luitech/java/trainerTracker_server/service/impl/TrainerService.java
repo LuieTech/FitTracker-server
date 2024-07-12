@@ -1,8 +1,10 @@
 package luitech.java.trainerTracker_server.service.impl;
 
 import luitech.java.trainerTracker_server.model.Client;
+import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
+import luitech.java.trainerTracker_server.repository.ExerciseRepository;
 import luitech.java.trainerTracker_server.repository.TrainerRepository;
 import luitech.java.trainerTracker_server.service.interfaces.ITrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class TrainerService implements ITrainerService {
     TrainerRepository trainerRepository;
     @Autowired
     ClientRepository clientRepository;
+    @Autowired
+    ExerciseRepository exerciseRepository;
 
     @Override
     public List<Trainer> getAllTrainers() {
@@ -50,5 +54,22 @@ public class TrainerService implements ITrainerService {
         return clientRepository.findAllByTrainerId(trainerId);
     }
 
+    @Override
+    public List<Exercise> getAllExercisesByTrainerId(Integer trainerId) {
+        Optional<Trainer> trainerOptional = trainerRepository.findById(trainerId);
+        if(trainerOptional.isPresent()){
+            return exerciseRepository.findAllByTrainerId(trainerId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer"+trainerId+"not found");
+        }
+    }
 
+    @Override
+    public void deleteTrainer(Integer trainerId) {
+        Optional<Trainer> trainerOptional = trainerRepository.findById(trainerId);
+        if (trainerOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer"+trainerId+"not found");
+        List<Client> clients = clientRepository.findAllByTrainerId(trainerId);
+        clientRepository.deleteAll(clients);
+        trainerRepository.deleteById(trainerId);
+    }
 }

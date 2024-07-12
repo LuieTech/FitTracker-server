@@ -39,6 +39,7 @@ class ClientControllerTest {
     MockMvc mockMvc;
     ObjectMapper objectMapper = new ObjectMapper();
 
+    Client clientToDelete;
     Client client1;
     ClientInfo clientInfo;
     Trainer trainer1;
@@ -47,6 +48,11 @@ class ClientControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        clientToDelete = new Client();
+        clientToDelete.setUsername("Raul");
+        clientToDelete.setPassword("1234567");
+        clientToDelete.setComment("This is a client to test delete method");
+        clientRepository.save(clientToDelete);
 
         clientInfo = new ClientInfo("michael edwards", "empty st.", 1234567, "me@example.com");
         client1 = new Client();
@@ -73,7 +79,10 @@ class ClientControllerTest {
 
     @AfterEach
     void tearDown() {
+        clientRepository.deleteById(clientToDelete.getId());
         clientRepository.deleteById(client1.getId());
+        exerciseRepository.deleteById(exercise1.getId());
+        trainerRepository.deleteById(trainer1.getId());
     }
     @Test
     void getAllClients_Test() throws Exception {
@@ -117,5 +126,16 @@ class ClientControllerTest {
                 .andReturn();
         assertTrue(clientRepository.findById(client1.getId()).toString().contains("kevin@example.com"));
     }
+    @Test
+    void deleteTrainer_test() throws Exception {
+        clientRepository.save(clientToDelete);
+
+        mockMvc.perform(delete("/api/clients/"+clientToDelete.getId()))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        assertFalse(trainerRepository.findAll().toString().contains("Raul"));
+    }
+
 
 }

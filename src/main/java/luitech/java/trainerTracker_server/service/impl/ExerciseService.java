@@ -1,5 +1,6 @@
 package luitech.java.trainerTracker_server.service.impl;
 
+import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.repository.ExerciseRepository;
 import luitech.java.trainerTracker_server.service.interfaces.IExerciseService;
@@ -34,6 +35,13 @@ public class ExerciseService implements IExerciseService {
     @Override
     public void saveExercise(Exercise exerciseBody) {
         exerciseRepository.save(exerciseBody);
+    }
+
+    @Override
+    public void deleteExercise(Integer id) {
+        Optional<Exercise> exerciseOptional = exerciseRepository.findById(id);
+        if (exerciseOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise"+id+"not found");
+        exerciseRepository.deleteById(id);
     }
 
 }

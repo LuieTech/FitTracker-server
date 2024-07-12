@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -81,5 +80,15 @@ class ExerciseControllerTest {
                 .andReturn();
 
         assertTrue(exerciseRepository.findAll().toString().contains("pull down"));
+    }
+    @Test
+    void deleteExercise_test() throws Exception {
+        exerciseRepository.save(exercise2);
+
+        mockMvc.perform(delete("/api/exercises/"+exercise2.getId()))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        assertFalse(exerciseRepository.findAll().toString().contains("push ups"));
     }
 }

@@ -40,12 +40,16 @@ class TrainerControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     Trainer trainer1;
+    Trainer trainerToDelete;
     Client client1;
     Exercise exercise1;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        trainerToDelete = new Trainer("Marc Jacobs", "Marc", "mj@example.com", 12345678);
+        trainerRepository.save(trainerToDelete);
+
         trainer1 = new Trainer("Jacob Williams", "jacob", "jw@example.com", 12345);
         trainerRepository.save(trainer1);
 
@@ -75,6 +79,7 @@ class TrainerControllerTest {
         clientRepository.deleteById(client1.getId());
         exerciseRepository.deleteById(exercise1.getId());
         trainerRepository.deleteById(trainer1.getId());
+        trainerRepository.deleteById(trainerToDelete.getId());
     }
 
     @Test
@@ -120,6 +125,16 @@ class TrainerControllerTest {
         assertEquals("Marco", foundTrainer.getUsername());
         assertEquals("marco@example.com", foundTrainer.getEmail());
         assertEquals(12345678, foundTrainer.getPhoneNumber());
+    }
 
+    @Test
+    void deleteTrainer() throws Exception {
+        trainerRepository.save(trainerToDelete);
+
+        mockMvc.perform(delete("/api/trainers/"+trainerToDelete.getId()))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        assertFalse(trainerRepository.findAll().toString().contains("Marc Jacobs"));
     }
 }

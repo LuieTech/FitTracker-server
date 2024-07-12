@@ -1,6 +1,7 @@
 package luitech.java.trainerTracker_server.controller.impl;
 
 import luitech.java.trainerTracker_server.model.Client;
+import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
 import luitech.java.trainerTracker_server.service.interfaces.IClientService;
@@ -41,10 +42,20 @@ public class TrainerController {
         trainerService.updateTrainer(trainerInfo, id);
     }
 
-
     @GetMapping("/trainers/clients/{trainerId}")
     public List<Client> getAllClientsByTrainerId(@PathVariable Integer trainerId){
         return trainerService.getAllClientsByTrainerId(trainerId);
+    }
+
+    @GetMapping("/trainers/exercises/{trainerId}")
+    public List<Exercise> getAllExercisesByTrainerId(@PathVariable Integer trainerId){
+        return trainerService.getAllExercisesByTrainerId(trainerId);
+    }
+
+    @DeleteMapping("/trainers/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTrainer(@PathVariable Integer id){
+        trainerService.deleteTrainer(id);
     }
 
 }
