@@ -50,5 +50,11 @@ public class ClientController {
         clientService.updateClientPassword(clientPasswordDTO.getPassword(), id);
     }
 
+    @DeleteMapping("/clients/{clientId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteClient(@PathVariable Integer clientId){
+        clientService.deleteClient(clientId);
+    }
+
 
 }

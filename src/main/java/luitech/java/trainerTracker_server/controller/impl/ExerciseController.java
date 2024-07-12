@@ -30,6 +30,10 @@ public class ExerciseController {
         exerciseService.saveExercise(exerciseBody);
     }
 
-
+    @DeleteMapping("/exercises/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteClient(@PathVariable Integer id){
+        exerciseService.deleteExercise(id);
+    }
 
 }

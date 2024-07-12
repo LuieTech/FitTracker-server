@@ -17,4 +17,6 @@ public interface IClientService {
     void updateClientUsername(String username, Integer id);
 
     void updateClientPassword(String password, Integer id);
+
+    void deleteClient(Integer clientId);
 }

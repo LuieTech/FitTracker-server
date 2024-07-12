@@ -2,6 +2,7 @@ package luitech.java.trainerTracker_server.service.impl;
 
 import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
 import luitech.java.trainerTracker_server.model.Client;
+import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
 import luitech.java.trainerTracker_server.service.interfaces.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,13 @@ public class ClientService implements IClientService {
         Client client = clientOptional.get();
         client.setPassword(password);
         clientRepository.save(client);
+    }
+
+    @Override
+    public void deleteClient(Integer id) {
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if (clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client"+id+"not found");
+        clientRepository.deleteById(id);
     }
 
 
