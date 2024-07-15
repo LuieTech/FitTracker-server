@@ -46,6 +46,8 @@ public class TrainerService implements ITrainerService {
     public void updateTrainer(Trainer trainerInfo, Integer id) {
         Optional<Trainer> trainerOptional = trainerRepository.findById(id);
         if(trainerOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer "+id+" not found");
+//        trainerInfo.setId(id);
+        Trainer trainerUpdated = trainerOptional.get();
         trainerRepository.save(trainerInfo);
     }
 

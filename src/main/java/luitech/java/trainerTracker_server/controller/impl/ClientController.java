@@ -4,7 +4,6 @@ import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientPasswordDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientUsernameDTO;
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.service.interfaces.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +31,12 @@ public class ClientController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveClient(@RequestBody Client clientBody){
         clientService.saveClient(clientBody);
+    }
+
+    @PatchMapping("/clients/{clientId}/exercise/{exerciseId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addExerciseToClient(@PathVariable Integer clientId,@PathVariable Integer exerciseId){
+        clientService.addExerciseToClient(clientId, exerciseId);
     }
 
     @PatchMapping("/clients/email/{id}")
