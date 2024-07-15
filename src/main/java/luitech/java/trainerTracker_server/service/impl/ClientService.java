@@ -1,9 +1,9 @@
 package luitech.java.trainerTracker_server.service.impl;
 
-import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.Trainer;
+import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
+import luitech.java.trainerTracker_server.repository.ExerciseRepository;
 import luitech.java.trainerTracker_server.service.interfaces.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +18,8 @@ public class ClientService implements IClientService {
 
     @Autowired
     ClientRepository clientRepository;
+    @Autowired
+    ExerciseRepository exerciseRepository;
 
     @Override
     public List<Client> getAllClients() {
@@ -70,5 +72,17 @@ public class ClientService implements IClientService {
         clientRepository.deleteById(id);
     }
 
+    @Override
+    public void addExerciseToClient(Integer clientId, Integer exerciseId) {
+        Optional<Client> clientOptional = clientRepository.findById(clientId);
+        if(clientOptional.isPresent()){
+            Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
+            if (exerciseOptional.isPresent()){
+                Client updatedClient = clientOptional.get();
+                updatedClient.getExerciseList().add(exerciseOptional.get());
+                clientRepository.save(updatedClient);
+            }
+        }
+    }
 
 }
