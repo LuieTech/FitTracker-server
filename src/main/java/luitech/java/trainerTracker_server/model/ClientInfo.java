@@ -1,5 +1,5 @@
 package luitech.java.trainerTracker_server.model;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;

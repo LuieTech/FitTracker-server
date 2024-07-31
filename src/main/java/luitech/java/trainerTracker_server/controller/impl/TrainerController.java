@@ -47,15 +47,10 @@ public class TrainerController {
         return trainerService.getAllClientsByTrainerId(trainerId);
     }
 
-    @GetMapping("/trainers/exercises/{trainerId}")
-    public List<Exercise> getAllExercisesByTrainerId(@PathVariable Integer trainerId){
-        return trainerService.getAllExercisesByTrainerId(trainerId);
-    }
-
-    @DeleteMapping("/trainers/{id}")
+    @DeleteMapping("/trainers/clients/{trainerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTrainer(@PathVariable Integer id){
-        trainerService.deleteTrainer(id);
+    public void deleteTrainer(@PathVariable Integer trainerId){
+        trainerService.deleteTrainer(trainerId);
     }
 
 }

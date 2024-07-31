@@ -1,6 +1,7 @@
 package luitech.java.trainerTracker_server.service.interfaces;
 
 import luitech.java.trainerTracker_server.model.Client;
+import luitech.java.trainerTracker_server.model.Exercise;
 
 import java.util.List;
 
@@ -19,5 +20,8 @@ public interface IClientService {
 
     void deleteClient(Integer clientId);
 
-    void addExerciseToClient(Integer clientId, Integer exerciseId);
+//    void addExerciseToClient(Integer clientId, Integer exerciseId);
+
+    List<Exercise> getAllExercisesByClientId(Integer clientId);
+
 }
