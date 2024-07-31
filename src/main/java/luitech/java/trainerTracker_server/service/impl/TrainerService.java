@@ -57,16 +57,6 @@ public class TrainerService implements ITrainerService {
     }
 
     @Override
-    public List<Exercise> getAllExercisesByTrainerId(Integer trainerId) {
-        Optional<Trainer> trainerOptional = trainerRepository.findById(trainerId);
-        if(trainerOptional.isPresent()){
-            return exerciseRepository.findAllByTrainerId(trainerId);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer"+trainerId+"not found");
-        }
-    }
-
-    @Override
     public void deleteTrainer(Integer trainerId) {
         Optional<Trainer> trainerOptional = trainerRepository.findById(trainerId);
         if (trainerOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer"+trainerId+"not found");

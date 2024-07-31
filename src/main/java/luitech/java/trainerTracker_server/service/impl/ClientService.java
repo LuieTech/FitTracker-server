@@ -72,16 +72,25 @@ public class ClientService implements IClientService {
         clientRepository.deleteById(id);
     }
 
+//    @Override
+//    public void addExerciseToClient(Integer clientId, Integer exerciseId) {
+//        Optional<Client> clientOptional = clientRepository.findById(clientId);
+//        if(clientOptional.isPresent()){
+//            Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
+//            if (exerciseOptional.isPresent()){
+//                Client updatedClient = clientOptional.get();
+//                updatedClient.getExerciseList().add(exerciseOptional.get());
+//                clientRepository.save(updatedClient);
+//            }
+//        }
+//    }
     @Override
-    public void addExerciseToClient(Integer clientId, Integer exerciseId) {
+    public List<Exercise> getAllExercisesByClientId(Integer clientId) {
         Optional<Client> clientOptional = clientRepository.findById(clientId);
         if(clientOptional.isPresent()){
-            Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
-            if (exerciseOptional.isPresent()){
-                Client updatedClient = clientOptional.get();
-                updatedClient.getExerciseList().add(exerciseOptional.get());
-                clientRepository.save(updatedClient);
-            }
+            return exerciseRepository.findAllByClientId(clientId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client "+clientId+" not found");
         }
     }
 

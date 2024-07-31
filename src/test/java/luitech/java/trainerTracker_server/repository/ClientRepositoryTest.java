@@ -42,7 +42,7 @@ class ClientRepositoryTest {
         clientInfo = new ClientInfo("michael edwards", "empty st.", 1234567, "me@example.com");
         client = new Client("michael1", "1234", "mon, wed, fri", clientInfo);
         client.setTrainer(trainer);
-        client.getExerciseList().add(exercise);
+//        client.getExerciseList().add(exercise);
         clientRepository.save(client);
         System.out.println("THIS IS CLIENT IN BEFORE EACH: "+client);
 

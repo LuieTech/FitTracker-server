@@ -18,7 +18,5 @@ public interface ITrainerService {
 
     List<Client> getAllClientsByTrainerId(Integer trainerId);
 
-    List<Exercise> getAllExercisesByTrainerId(Integer trainerId);
-
     void deleteTrainer(Integer id);
 }
