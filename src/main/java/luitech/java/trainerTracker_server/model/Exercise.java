@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -14,16 +16,16 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String description;
+    @ElementCollection
+    private List<String> instructions;
     private String bodyPart;
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
-    public Exercise(String name, String description, String bodyPart) {
+    public Exercise(String name, List<String> instructions, String bodyPart) {
         this.name = name;
-        this.description = description;
+        this.instructions = instructions;
         this.bodyPart = bodyPart;
     }
-
 }
