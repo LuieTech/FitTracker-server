@@ -1,5 +1,4 @@
 package luitech.java.trainerTracker_server.service.impl;
-
 import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.repository.ExerciseRepository;
@@ -13,8 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-
-
 @Service
 public class ExerciseService implements IExerciseService {
 

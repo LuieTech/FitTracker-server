@@ -38,13 +38,13 @@ class ExerciseControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         exercise1 = new Exercise();
         exercise1.setName("pull down");
-        exercise1.setDescription("slow tempo 1-2-3");
+        exercise1.setInstructions("slow tempo 1-2-3");
         exercise1.setBodyPart("back");
         exerciseRepository.save(exercise1);
 
         exercise2 = new Exercise();
         exercise2.setName("push ups");
-        exercise2.setDescription("slow tempo 1-2-3");
+        exercise2.setInstructions("slow tempo 1-2-3");
         exercise2.setBodyPart("chest");
         exerciseRepository.save(exercise2);
     }

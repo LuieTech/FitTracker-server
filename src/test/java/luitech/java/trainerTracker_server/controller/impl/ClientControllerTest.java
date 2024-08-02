@@ -67,7 +67,7 @@ class ClientControllerTest {
 
         exercise1 = new Exercise();
         exercise1.setName("lunges");
-        exercise1.setDescription("medium tempo");
+        exercise1.setInstructions("medium tempo");
         exercise1.setBodyPart("legs");
         exerciseRepository.save(exercise1);
 
