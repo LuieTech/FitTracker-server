@@ -14,10 +14,6 @@ public interface IClientService {
 
     void updateClientEmail(String email, Integer id);
 
-    void updateClientUsername(String username, Integer id);
-
-    void updateClientPassword(String password, Integer id);
-
     void deleteClient(Integer clientId);
 
 //    void addExerciseToClient(Integer clientId, Integer exerciseId);

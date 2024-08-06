@@ -5,6 +5,8 @@ import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
 import luitech.java.trainerTracker_server.repository.ExerciseRepository;
 import luitech.java.trainerTracker_server.service.interfaces.IClientService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.Optional;
 @Service
 public class ClientService implements IClientService {
 
+    private static final Logger log = LoggerFactory.getLogger(ClientService.class);
     @Autowired
     ClientRepository clientRepository;
     @Autowired
@@ -43,25 +46,7 @@ public class ClientService implements IClientService {
         Optional<Client> clientOptional = clientRepository.findById(id);
         if(clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client "+id+" not found");
         Client client = clientOptional.get();
-        client.getClientInfo().setEmail(email);
-        clientRepository.save(client);
-    }
-
-    @Override
-    public void updateClientUsername(String username, Integer id) {
-        Optional<Client> clientOptional = clientRepository.findById(id);
-        if(clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client "+id+" not found");
-        Client client = clientOptional.get();
-        client.setUsername(username);
-        clientRepository.save(client);
-    }
-
-    @Override
-    public void updateClientPassword(String password, Integer id) {
-        Optional<Client> clientOptional = clientRepository.findById(id);
-        if(clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client "+id+" not found");
-        Client client = clientOptional.get();
-        client.setPassword(password);
+        client.setEmail(email);
         clientRepository.save(client);
     }
 
@@ -72,18 +57,6 @@ public class ClientService implements IClientService {
         clientRepository.deleteById(id);
     }
 
-//    @Override
-//    public void addExerciseToClient(Integer clientId, Integer exerciseId) {
-//        Optional<Client> clientOptional = clientRepository.findById(clientId);
-//        if(clientOptional.isPresent()){
-//            Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
-//            if (exerciseOptional.isPresent()){
-//                Client updatedClient = clientOptional.get();
-//                updatedClient.getExerciseList().add(exerciseOptional.get());
-//                clientRepository.save(updatedClient);
-//            }
-//        }
-//    }
     @Override
     public List<Exercise> getAllExercisesByClientId(Integer clientId) {
         Optional<Client> clientOptional = clientRepository.findById(clientId);

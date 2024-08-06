@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class ClientInfo {
     private String name;
-    private String Address;
+    private String address;
     private Integer phoneNumber;
     private String email;
 

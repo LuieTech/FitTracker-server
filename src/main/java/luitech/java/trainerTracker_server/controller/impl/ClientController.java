@@ -1,5 +1,4 @@
 package luitech.java.trainerTracker_server.controller.impl;
-
 import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientPasswordDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientUsernameDTO;
@@ -34,26 +33,10 @@ public class ClientController {
         clientService.saveClient(clientBody);
     }
 
-//    @PatchMapping("/clients/{clientId}/exercise/{exerciseId}")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void addExerciseToClient(@PathVariable Integer clientId,@PathVariable Integer exerciseId){
-//        clientService.addExerciseToClient(clientId, exerciseId);
-//    }
-
     @PatchMapping("/clients/email/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateClientEmail(@RequestBody ClientEmailDTO clientEmailDTO, @PathVariable Integer id){
         clientService.updateClientEmail(clientEmailDTO.getEmail(), id);
-    }
-    @PatchMapping("/clients/username/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateClientUsername(@RequestBody ClientUsernameDTO clientUsernameDTO, @PathVariable Integer id){
-        clientService.updateClientUsername(clientUsernameDTO.getUsername(), id);
-    }
-    @PatchMapping("/clients/password/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateClientPassword(@RequestBody ClientPasswordDTO clientPasswordDTO, @PathVariable Integer id){
-        clientService.updateClientPassword(clientPasswordDTO.getPassword(), id);
     }
 
     @DeleteMapping("/clients/{clientId}")
