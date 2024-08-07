@@ -55,17 +55,17 @@ public class ClientService implements IClientService {
     @Transactional
     public void deleteClient(Integer id) {
 
-//        Optional<Client> clientOptional = clientRepository.findById(id);
-//        if(clientOptional.isPresent()){
-//            exerciseRepository.deleteByClientId(id);
-//            clientRepository.deleteById(id);
-//        } else {
-//            throw new RuntimeException("Client not found");
-//        }
-
         Optional<Client> clientOptional = clientRepository.findById(id);
-        if (clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client"+id+"not found");
-        clientRepository.deleteById(id);
+        if(clientOptional.isPresent()){
+            exerciseRepository.deleteByClientId(id);
+            clientRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Client not found");
+        }
+//
+//        Optional<Client> clientOptional = clientRepository.findById(id);
+//        if (clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client"+id+"not found");
+//        clientRepository.deleteById(id);
     }
 
     @Override

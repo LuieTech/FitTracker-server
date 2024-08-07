@@ -21,9 +21,8 @@ public class Exercise {
     @ElementCollection
     private List<String> instructions;
     private String bodyPart;
-    @ManyToOne
+    @ManyToOne // @JsonIgnore
     @JoinColumn(name = "client_id")
-    @JsonIgnore
     private Client client;
 
     public Exercise(String name, List<String> instructions, String bodyPart) {
