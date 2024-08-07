@@ -1,5 +1,6 @@
 package luitech.java.trainerTracker_server.service.impl;
 
+import jakarta.transaction.Transactional;
 import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
@@ -51,7 +52,17 @@ public class ClientService implements IClientService {
     }
 
     @Override
+    @Transactional
     public void deleteClient(Integer id) {
+
+//        Optional<Client> clientOptional = clientRepository.findById(id);
+//        if(clientOptional.isPresent()){
+//            exerciseRepository.deleteByClientId(id);
+//            clientRepository.deleteById(id);
+//        } else {
+//            throw new RuntimeException("Client not found");
+//        }
+
         Optional<Client> clientOptional = clientRepository.findById(id);
         if (clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client"+id+"not found");
         clientRepository.deleteById(id);

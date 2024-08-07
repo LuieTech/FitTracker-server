@@ -10,4 +10,6 @@ import java.util.List;
 public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
     //JPA
     List<Exercise> findAllByClientId(Integer client);
+
+    void deleteByClientId( Integer clientId);
 }

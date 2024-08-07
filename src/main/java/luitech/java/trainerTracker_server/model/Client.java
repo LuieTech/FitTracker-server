@@ -25,6 +25,4 @@ public class Client {
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
-
-
 }

@@ -1,5 +1,6 @@
 package luitech.java.trainerTracker_server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Exercise {
     private String bodyPart;
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnore
     private Client client;
 
     public Exercise(String name, List<String> instructions, String bodyPart) {
