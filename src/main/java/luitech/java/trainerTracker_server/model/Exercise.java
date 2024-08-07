@@ -15,6 +15,7 @@ public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String gifUrl;
     private String name;
     @ElementCollection
     private List<String> instructions;
