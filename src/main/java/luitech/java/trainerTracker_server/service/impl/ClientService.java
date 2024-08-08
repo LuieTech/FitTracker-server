@@ -1,6 +1,7 @@
 package luitech.java.trainerTracker_server.service.impl;
 
 import jakarta.transaction.Transactional;
+import luitech.java.trainerTracker_server.controller.dto.ClientCommentDTO;
 import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
@@ -51,6 +52,8 @@ public class ClientService implements IClientService {
         clientRepository.save(client);
     }
 
+
+
     @Override
     @Transactional
     public void deleteClient(Integer id) {
@@ -62,7 +65,7 @@ public class ClientService implements IClientService {
         } else {
             throw new RuntimeException("Client not found");
         }
-//
+
 //        Optional<Client> clientOptional = clientRepository.findById(id);
 //        if (clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client"+id+"not found");
 //        clientRepository.deleteById(id);
@@ -78,4 +81,12 @@ public class ClientService implements IClientService {
         }
     }
 
+    @Override
+    public void updateClientComment(String comment, Integer id) {
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if(clientOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client "+id+" not found");
+        Client client = clientOptional.get();
+        client.setComment(comment);
+        clientRepository.save(client);
+    }
 }

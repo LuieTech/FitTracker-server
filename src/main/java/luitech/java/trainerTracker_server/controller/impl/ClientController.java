@@ -1,4 +1,5 @@
 package luitech.java.trainerTracker_server.controller.impl;
+import luitech.java.trainerTracker_server.controller.dto.ClientCommentDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientPasswordDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientUsernameDTO;
@@ -48,6 +49,11 @@ public class ClientController {
     @GetMapping("/clients/exercises/{clientId}")
     public List<Exercise> getAllExercisesByClientId(@PathVariable Integer clientId){
         return clientService.getAllExercisesByClientId(clientId);
+    }
+
+    @PatchMapping("/clients/{id}/comment")
+    public void updateClientComment(@RequestBody ClientCommentDTO clientCommentDTO, @PathVariable Integer id){
+        clientService.updateClientComment(clientCommentDTO.getComment(), id);
     }
 
 
