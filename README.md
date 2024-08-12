@@ -13,7 +13,7 @@
 
 
 <p align="center">
-<a href="https://github.com/LuieTech/FitTracker-server">📱 Visit this Project</a>
+<a href="https://github.com/LuieTech/FitTracker-client">📱 Visit this Project</a>
 </p>
 
 <h2 id="technologies">💻 Technologies</h2>
