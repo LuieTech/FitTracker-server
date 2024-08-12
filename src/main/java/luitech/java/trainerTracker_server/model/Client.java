@@ -18,7 +18,7 @@ public class Client {
     private Integer id;
     private String name;
     private String address;
-    private Integer phoneNumber;
+    private String phoneNumber;
     private String email;
     private String comment;
     @ManyToOne
