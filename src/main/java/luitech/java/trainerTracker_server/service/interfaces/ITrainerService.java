@@ -19,4 +19,6 @@ public interface ITrainerService {
     List<Client> getAllClientsByTrainerId(Integer trainerId);
 
     void deleteTrainer(Integer id);
+
+
 }
