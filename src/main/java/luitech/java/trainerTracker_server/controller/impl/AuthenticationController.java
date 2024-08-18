@@ -1,6 +1,8 @@
 package luitech.java.trainerTracker_server.controller.impl;
 
 import lombok.RequiredArgsConstructor;
+import luitech.java.trainerTracker_server.controller.dto.JwtAuthenticationResponse;
+import luitech.java.trainerTracker_server.controller.dto.LoginRequestDTO;
 import luitech.java.trainerTracker_server.controller.dto.RegisterRequestDTO;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.service.interfaces.IAuthenticationService;
@@ -17,6 +19,11 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<Trainer> register(@RequestBody RegisterRequestDTO registerRequestDTO){
         return ResponseEntity.ok(authenticationService.register(registerRequestDTO));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody LoginRequestDTO loginRequestDTO){
+        return ResponseEntity.ok(authenticationService.login(loginRequestDTO));
     }
 
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
 import luitech.java.trainerTracker_server.controller.dto.ClientPasswordDTO;
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.ClientInfo;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;

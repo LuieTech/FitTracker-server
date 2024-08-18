@@ -1,7 +1,6 @@
 package luitech.java.trainerTracker_server.service.interfaces;
 
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 
 import java.util.List;

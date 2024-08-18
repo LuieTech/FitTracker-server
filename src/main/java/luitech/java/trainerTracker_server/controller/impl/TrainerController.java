@@ -1,10 +1,8 @@
 package luitech.java.trainerTracker_server.controller.impl;
 
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
-import luitech.java.trainerTracker_server.service.interfaces.IClientService;
 import luitech.java.trainerTracker_server.service.interfaces.ITrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

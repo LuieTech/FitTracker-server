@@ -1,7 +1,5 @@
 package luitech.java.trainerTracker_server.repository;
 
-import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,14 +2,12 @@ package luitech.java.trainerTracker_server.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
 import luitech.java.trainerTracker_server.repository.ExerciseRepository;
 import luitech.java.trainerTracker_server.repository.TrainerRepository;
 import luitech.java.trainerTracker_server.service.interfaces.ITrainerService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,7 +25,7 @@ public class TrainerService implements ITrainerService, UserDetailsService {
     private final ExerciseRepository exerciseRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return trainerRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
