@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.service.interfaces.IJWTService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -17,24 +18,31 @@ import java.util.function.Function;
 @Service
 public class JWTServiceImpl implements IJWTService {
 
-    public String generateToken(UserDetails userDetails){
-        return Jwts.builder().setSubject(userDetails.getUsername())
+    public String generateToken(UserDetails userDetails) {
+        System.out.println("This is the user: " + userDetails);
+        System.out.println("this is when I created the token by login in: " + new Date(System.currentTimeMillis()));
+        String subject = ((Trainer) userDetails).getEmail();  // Siempre usa el email como subject
+        return Jwts.builder().setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
+
     @Override
     public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+        String subject = userDetails.getUsername() != null ? userDetails.getUsername() : ((Trainer) userDetails).getEmail();
+        System.out.println("this is when I created the refreshToken by login in: "+ new Date(System.currentTimeMillis()));
+
+        return Jwts.builder().setClaims(extraClaims).setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 604800000))
+                .setExpiration(new Date(System.currentTimeMillis() + 604800000)) // 7 days
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String extractUserName(String token){
+    public String extractEmail(String token){
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -56,13 +64,33 @@ public class JWTServiceImpl implements IJWTService {
         return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
     }
 
-
-    public boolean isTokenValid(String token, UserDetails userDetails){
-        final String username = extractUserName(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
-
     private boolean isTokenExpired(String token){
-        return extractClaim(token, Claims::getExpiration).before(new Date());
+        Date expirationDate = extractClaim(token, Claims::getExpiration);
+        Date currentDate = new Date();
+        System.out.println("Token expiration date: " + expirationDate);
+        System.out.println("Current date: " + currentDate);
+        return expirationDate.before(currentDate);
     }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String email = extractEmail(token);
+
+        if (email == null) {
+            System.out.println("Error: El email en el token es null");
+            return false;
+        }
+
+        System.out.println("Email from token: " + email);
+        System.out.println("Email from userDetails: " + ((Trainer) userDetails).getEmail());
+
+        return (email.equals(((Trainer) userDetails).getEmail()) && !isTokenExpired(token));
+    }
+
+
+
+//    private boolean isTokenExpired(String token){
+//        return extractClaim(token, Claims::getExpiration).before(new Date());
+//    }
+
+
 }
