@@ -86,11 +86,4 @@ public class JWTServiceImpl implements IJWTService {
         return (email.equals(((Trainer) userDetails).getEmail()) && !isTokenExpired(token));
     }
 
-
-
-//    private boolean isTokenExpired(String token){
-//        return extractClaim(token, Claims::getExpiration).before(new Date());
-//    }
-
-
 }

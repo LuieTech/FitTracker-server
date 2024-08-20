@@ -24,9 +24,18 @@ public class Trainer implements UserDetails {
     private String password;
     private Integer phoneNumber;
 
+    public String getActualUsername() {
+        return username;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override

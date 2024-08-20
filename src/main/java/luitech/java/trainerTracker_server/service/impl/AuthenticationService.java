@@ -33,8 +33,10 @@ public class AuthenticationService implements IAuthenticationService {
     public Trainer register(RegisterRequestDTO registerRequestDTO) {
         Trainer trainer = new Trainer();
         trainer.setEmail(registerRequestDTO.getEmail());
-        trainer.setName(registerRequestDTO.getName());
+        trainer.setUsername(registerRequestDTO.getUsername());
         trainer.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
+
+        Trainer savedTrainer = trainerRepository.save(trainer);
 
         return trainerRepository.save(trainer);
     }
@@ -45,9 +47,6 @@ public class AuthenticationService implements IAuthenticationService {
 
         var trainer = trainerRepository.findByEmail(loginRequestDTO.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid EMAIL or PASSWORD"));
-
-        // Configura el username como el email
-        trainer.setUsername(trainer.getEmail());
 
         var jwt = ijwtService.generateToken(trainer);
         var refreshToken = ijwtService.generateRefreshToken(new HashMap<>(), trainer);
@@ -66,7 +65,7 @@ public JwtAuthenticationResponse refreshToken(RefreshTokenReqDTO refreshTokenReq
     var trainer = trainerRepository.findByEmail(userEmail)
             .orElseThrow(() -> new IllegalArgumentException("Trainer not found"));
 
-    trainer.setUsername(trainer.getEmail());
+//    trainer.setUsername(trainer.getEmail());
 
 
     // Verificar si el token es válido
