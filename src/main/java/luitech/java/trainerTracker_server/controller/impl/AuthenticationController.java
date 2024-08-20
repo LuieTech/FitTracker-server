@@ -51,6 +51,4 @@ public class AuthenticationController {
         TrainerResponseDTO trainerResponseDTO = new TrainerResponseDTO(trainer); // Convierte tu entidad Trainer a un DTO para devolverlo
         return ResponseEntity.ok(trainerResponseDTO);
     }
-
-
 }
