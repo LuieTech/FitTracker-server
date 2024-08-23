@@ -1,7 +1,7 @@
 package luitech.java.trainerTracker_server.service.interfaces;
 
+import luitech.java.trainerTracker_server.controller.dto.TrainerInfoDTO;
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 
 import java.util.List;
@@ -19,4 +19,7 @@ public interface ITrainerService {
     List<Client> getAllClientsByTrainerId(Integer trainerId);
 
     void deleteTrainer(Integer id);
+
+
+    void updateTrainerInfo(Integer id, TrainerInfoDTO trainerInfoDTO);
 }

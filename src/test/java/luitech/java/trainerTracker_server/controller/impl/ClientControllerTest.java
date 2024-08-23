@@ -1,10 +1,9 @@
 package luitech.java.trainerTracker_server.controller.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
-import luitech.java.trainerTracker_server.controller.dto.ClientPasswordDTO;
+import luitech.java.trainerTracker_server.controller.dto.EmailDTO;
+import luitech.java.trainerTracker_server.controller.dto.PasswordDTO;
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.ClientInfo;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
@@ -41,7 +40,6 @@ class ClientControllerTest {
 
     Client clientToDelete;
     Client client1;
-    ClientInfo clientInfo;
     Trainer trainer1;
     Exercise exercise1;
 
@@ -49,30 +47,23 @@ class ClientControllerTest {
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         clientToDelete = new Client();
-        clientToDelete.setUsername("Raul");
-        clientToDelete.setPassword("1234567");
+
         clientToDelete.setComment("This is a client to test delete method");
         clientRepository.save(clientToDelete);
 
-        clientInfo = new ClientInfo("michael edwards", "empty st.", 1234567, "me@example.com");
         client1 = new Client();
-        client1.setUsername("henryTech");
-        client1.setPassword("12345");
+
         client1.setComment("full body 3x per week");
-        client1.setClientInfo(clientInfo);
         clientRepository.save(client1);
 
-        trainer1 = new Trainer("Jacob Williams", "jacob", "jw@example.com", 12345);
         trainerRepository.save(trainer1);
 
         exercise1 = new Exercise();
         exercise1.setName("lunges");
-        exercise1.setInstructions("medium tempo");
         exercise1.setBodyPart("legs");
         exerciseRepository.save(exercise1);
 
         client1.setTrainer(trainer1);
-        client1.getExerciseList().add(exercise1);
         clientRepository.save(client1);
 
     }
@@ -82,7 +73,6 @@ class ClientControllerTest {
         clientRepository.deleteById(clientToDelete.getId());
         clientRepository.deleteById(client1.getId());
         exerciseRepository.deleteById(exercise1.getId());
-        trainerRepository.deleteById(trainer1.getId());
     }
     @Test
     void getAllClients_Test() throws Exception {
@@ -110,8 +100,8 @@ class ClientControllerTest {
 
     @Test
     void updateClientPassword_test() throws Exception {
-        ClientPasswordDTO clientPasswordDTO = new ClientPasswordDTO("567890");
-        String body = objectMapper.writeValueAsString(clientPasswordDTO);
+        PasswordDTO passwordDTO = new PasswordDTO("567890");
+        String body = objectMapper.writeValueAsString(passwordDTO);
         mockMvc.perform(patch("/api/clients/password/"+client1.getId()).content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andReturn();
@@ -119,8 +109,8 @@ class ClientControllerTest {
     }
     @Test
     void updateClientEmail_test() throws Exception {
-        ClientEmailDTO clientEmailDTO = new ClientEmailDTO("kevin@example.com");
-        String body = objectMapper.writeValueAsString(clientEmailDTO);
+        EmailDTO emailDTO = new EmailDTO("kevin@example.com");
+        String body = objectMapper.writeValueAsString(emailDTO);
         mockMvc.perform(patch("/api/clients/email/"+client1.getId()).content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andReturn();

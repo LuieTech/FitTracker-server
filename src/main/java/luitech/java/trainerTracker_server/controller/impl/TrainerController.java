@@ -1,10 +1,9 @@
 package luitech.java.trainerTracker_server.controller.impl;
 
+import luitech.java.trainerTracker_server.controller.dto.TrainerInfoDTO;
 import luitech.java.trainerTracker_server.model.Client;
-import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
-import luitech.java.trainerTracker_server.service.interfaces.IClientService;
 import luitech.java.trainerTracker_server.service.interfaces.ITrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +33,12 @@ public class TrainerController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveTrainer(@RequestBody Trainer trainerBody){
         trainerService.saveTrainer(trainerBody);
+    }
+
+    @PatchMapping("/trainers/update-info/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateTrainerInfo(@RequestBody TrainerInfoDTO trainerInfoDTO, @PathVariable Integer id){
+        trainerService.updateTrainerInfo(id, trainerInfoDTO);
     }
 
     @PutMapping("/trainers/{id}")

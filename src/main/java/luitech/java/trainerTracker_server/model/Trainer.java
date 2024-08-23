@@ -1,29 +1,65 @@
 package luitech.java.trainerTracker_server.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Trainer {
+@AllArgsConstructor
+public class Trainer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String username;
     private String email;
-    private Integer phoneNumber;
+    private String password;
+    private String phoneNumber;
 
-    public Trainer(String name, String username, String email, Integer phoneNumber) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+    public String getActualUsername() {
+        return username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+//        return UserDetails.super.isAccountNonExpired();
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+//        return UserDetails.super.isAccountNonLocked();
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+//        return UserDetails.super.isCredentialsNonExpired();
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+//        return UserDetails.super.isEnabled();
+        return true;
     }
 
 }
