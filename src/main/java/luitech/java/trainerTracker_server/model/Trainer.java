@@ -22,7 +22,7 @@ public class Trainer implements UserDetails {
     private String username;
     private String email;
     private String password;
-    private Integer phoneNumber;
+    private String phoneNumber;
 
     public String getActualUsername() {
         return username;

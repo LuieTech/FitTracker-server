@@ -1,6 +1,7 @@
 package luitech.java.trainerTracker_server.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import luitech.java.trainerTracker_server.controller.dto.TrainerInfoDTO;
 import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Trainer;
 import luitech.java.trainerTracker_server.repository.ClientRepository;
@@ -45,6 +46,24 @@ public class TrainerService implements ITrainerService, UserDetailsService {
     @Override
     public void saveTrainer(Trainer trainerBody) {
         trainerRepository.save(trainerBody);
+    }
+
+    @Override
+    public void updateTrainerInfo(Integer id, TrainerInfoDTO trainerInfoDTO) {
+
+        Optional<Trainer> trainerOptional = trainerRepository.findById(Long.valueOf(id));
+        if (trainerOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer " + id + " not found");
+        else {
+            Trainer trainer = trainerOptional.get();
+            if (trainerInfoDTO.getName() != null) {
+                trainer.setName(trainerInfoDTO.getName());
+            }
+            if (trainerInfoDTO.getPhoneNumber() != null) {
+                trainer.setPhoneNumber(trainerInfoDTO.getPhoneNumber());
+            }
+
+            trainerRepository.save(trainer);
+        }
     }
 
     @Override

@@ -13,7 +13,7 @@ public class TrainerResponseDTO {
     private String name;
     private String username;
     private String email;
-    private Integer phoneNumber;
+    private String phoneNumber;
 
     public TrainerResponseDTO(Trainer trainer) {
         this.id = trainer.getId();

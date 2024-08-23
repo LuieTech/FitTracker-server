@@ -1,8 +1,6 @@
 package luitech.java.trainerTracker_server.controller.impl;
 import luitech.java.trainerTracker_server.controller.dto.ClientCommentDTO;
-import luitech.java.trainerTracker_server.controller.dto.ClientEmailDTO;
-import luitech.java.trainerTracker_server.controller.dto.ClientPasswordDTO;
-import luitech.java.trainerTracker_server.controller.dto.ClientUsernameDTO;
+import luitech.java.trainerTracker_server.controller.dto.EmailDTO;
 import luitech.java.trainerTracker_server.model.Client;
 import luitech.java.trainerTracker_server.model.Exercise;
 import luitech.java.trainerTracker_server.service.interfaces.IClientService;
@@ -36,8 +34,8 @@ public class ClientController {
 
     @PatchMapping("/clients/email/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateClientEmail(@RequestBody ClientEmailDTO clientEmailDTO, @PathVariable Integer id){
-        clientService.updateClientEmail(clientEmailDTO.getEmail(), id);
+    public void updateClientEmail(@RequestBody EmailDTO emailDTO, @PathVariable Integer id){
+        clientService.updateClientEmail(emailDTO.getEmail(), id);
     }
 
     @DeleteMapping("/clients/{clientId}")
