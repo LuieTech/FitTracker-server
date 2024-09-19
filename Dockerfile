@@ -22,7 +22,8 @@ WORKDIR /app
 COPY --from=build /app/target/trainerTracker-server-0.0.1-SNAPSHOT.jar /app/trainerTracker-server-0.0.1-SNAPSHOT.jar
 
 # Expose the port on which the app will run
-EXPOSE 8080
+ENV PORT=10000
+EXPOSE ${PORT}
 
 # Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "/app/trainerTracker-server-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/app/trainerTracker-server-0.0.1-SNAPSHOT.jar", "--server.port=${PORT}"]
