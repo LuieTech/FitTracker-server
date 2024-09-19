@@ -1,0 +1,6 @@
+src/test/
+target/
+.git/
+.idea/
+*.md
+.env

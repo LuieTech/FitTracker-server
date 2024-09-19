@@ -65,12 +65,8 @@ public JwtAuthenticationResponse refreshToken(RefreshTokenReqDTO refreshTokenReq
     var trainer = trainerRepository.findByEmail(userEmail)
             .orElseThrow(() -> new IllegalArgumentException("Trainer not found"));
 
-//    trainer.setUsername(trainer.getEmail());
-
-
     // Verificar si el token es válido
     boolean isValid = ijwtService.isTokenValid(refreshTokenReqDTO.getToken(), trainer);
-    System.out.println("Is the token valid? " + isValid);
 
     if(isValid){
         var jwt = ijwtService.generateToken(trainer);
@@ -78,10 +74,6 @@ public JwtAuthenticationResponse refreshToken(RefreshTokenReqDTO refreshTokenReq
         JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();
         jwtAuthenticationResponse.setToken(jwt);
         jwtAuthenticationResponse.setRefreshToken(refreshTokenReqDTO.getToken());
-
-        // Log para verificar los tokens generados
-        System.out.println("Generated new JWT: " + jwt);
-        System.out.println("Generated new Refresh Token: " + jwtAuthenticationResponse.getRefreshToken());
 
         return jwtAuthenticationResponse;
     }
