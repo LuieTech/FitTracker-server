@@ -14,18 +14,18 @@ public class TrainerTrackerServerApplication {
 	private String frontendUrl;
 
 	@Bean
-	public WebMvcConfigurer corsConfigurer(){
-
+	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
-			public void addCorsMappings(CorsRegistry registry){
+			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/**")
-						.allowedOrigins(frontendUrl)
+						.allowedOrigins(frontendUrl.split(","))
 						.allowedMethods("*")
 						.allowCredentials(true);
 			}
 		};
 	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(TrainerTrackerServerApplication.class, args);
